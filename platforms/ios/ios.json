@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"CDVOrientation\"><param name=\"ios-package\" value=\"CDVOrientation\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -19,6 +23,9 @@
     },
     "installed_plugins": {
         "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "au.com.ifm.mapmobile"
+        },
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "au.com.ifm.mapmobile"
         }
     },
@@ -32,9 +39,18 @@
                 "cordova.InAppBrowser.open",
                 "window.open"
             ]
+        },
+        {
+            "id": "cordova-plugin-screen-orientation.screenorientation",
+            "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+            "pluginId": "cordova-plugin-screen-orientation",
+            "clobbers": [
+                "cordova.plugins.screenorientation"
+            ]
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-inappbrowser": "1.7.1"
+        "cordova-plugin-inappbrowser": "1.7.1",
+        "cordova-plugin-screen-orientation": "2.0.1"
     }
 }

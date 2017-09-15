@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "au.com.ifm.mapmobile"
+        },
+        "cordova-plugin-screen-orientation": {
+            "PACKAGE_NAME": "au.com.ifm.mapmobile"
         }
     },
     "dependent_plugins": {}

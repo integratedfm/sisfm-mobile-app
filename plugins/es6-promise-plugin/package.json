@@ -1,0 +1,32 @@
+{
+  "name": "es6-promise-plugin",
+  "version": "4.1.1",
+  "description": "ES6-Promises polyfill for Cordova/PhoneGap",
+  "main": "www/promise.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "es6-promise": "^4.1.1"
+  },
+  "scripts": {
+    "build": "./build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vstirbu/PromisesPlugin.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vstirbu/PromisesPlugin/issues"
+  },
+  "homepage": "https://github.com/vstirbu/PromisesPlugin#readme",
+  "ecosystem": "cordova",
+  "readme": "# PromisesPlugin\r\n\r\nES6-Promises polyfill for Cordova/PhoneGap\r\n\r\n# Motivation\r\n\r\nThe web view components on Cordova supported platforms lack suport for ES6 Promise. A polyfill library bundled with the plugin fixes the limitation. However, as more plugin use promises, the application developer using these plugins will end up with multiple promise polyfill libraries.\r\n\r\nThis plugin attempts to fix this situation by providing a Promise polyfill so that other plugins can rely on this functionality.\r\n\r\n# How to use\r\n\r\nConfigure your plugin's plugin.xml by adding this dependency:\r\n\r\n```\r\n<dependency id=\"es6-promise-plugin\" version=\"4.1.0\" />\r\n```\r\n\r\nCordova CLI takes care to install PromisesPlugin automatically:\r\n\r\n```\r\n$ cordova plugins add {yourPlugin}\r\n\r\n> Installing \"{yourPlugin}\" for {platform}\r\n> Installing \"es6-promise-plugin\" for {platform}\r\n```\r\n\r\nThis is all. ```window.Promise``` is available for use in your plugin.\r\n\r\n# Credits\r\n\r\nThis plugin wraps [es6-promise](https://github.com/jakearchibald/es6-promise) in a Cordova/PhoneGap friendly way.\r\n\r\n# License\r\n\r\nThe plugin is available under MIT license.\r\n",
+  "readmeFilename": "README.md",
+  "gitHead": "6ec3f7812945176569a62b304821a4aafc3b0949",
+  "_id": "es6-promise-plugin@4.1.1",
+  "_shasum": "47e57b3bf156d7f6769d2f02a61f2bed0fd6e28d",
+  "_from": "git+https://github.com/vstirbu/PromisesPlugin.git",
+  "_resolved": "git+https://github.com/vstirbu/PromisesPlugin.git#6ec3f7812945176569a62b304821a4aafc3b0949"
+}

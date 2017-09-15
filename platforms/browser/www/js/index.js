@@ -18,6 +18,9 @@
  */
 var sites_map={};
 var siteStored=null;
+var stored_org_index=0;
+var stored_campus_id=null;
+var stored_msg;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -49,150 +52,199 @@ var app = {
         receivedElement.setAttribute('style', 'display:none;');
 
         console.log('Received Event: ' + id);
-        siteStored = getStoredSite();
+        siteStored = window.localStorage.getItem("site_id");
+		stored_campus_id = window.localStorage.getItem("campus_name");
         
-        jQuery.getJSON("http://afmtest.integratedfm.com.au/sisfm-mobile/sisfm-urls.json", function(msg){
+        jQuery.getJSON("http://afm.integratedfm.com.au/sisfm-mobile/sisfm-urls.json", function(msg){
             var res = msg;
-			var site, site_id;
+            stored_msg=msg;
+			var site, site_id, t, k;
 			var lil= $("#sites");
-			console.log('Got UL: ');
-			var t='<li   id="SITEID" onclick="onSiteClick(SITEID)" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c"><a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r"><img border="0" alt="SITENAME Icon" src="SITEIMAGESRC" class="ui-li-thumb"> SITENAME</a></li>';
-			//t='<li id="SITEID"><a href="#nav-page" onclick="onSiteClick(SITEID)">SITENAME</a></li>';
-			var el;
+            var org_page_title = msg.org_page_header;
+            var org_page_image = msg.org_page_image;
+			
+			
+            
+            
+            var el;
 			var sites=msg.sites;
+			
+            $("#org_page_header").text(org_page_title);
+			
+            $("#org-page-image-place-holder")[0].src=msg.org_page_image;
+			//$("#org-page-image-place-holder")[0].style=(msg.org_page_image_style);
+			//$("#org-page-selector-div")[0].style=msg.org_page_sel_div_style;
+            lil.empty();
+			//console.log('Got UL: ');
+			
+            t='<option id="OPTIONID" value="VALUE" >OPTIONTEXT</option>';
 			console.log('Got sites: ');
 			
-            for(var k=0; k<res.sites.length; k++){
+            for(k=0; k<res.sites.length; k++){
 				site = sites[k];
 				site_id=site.id;
 				sites_map[site_id]=site;
 				image = site.image;
-				
-				
-				el = t.replace('SITEID', site_id)
-					.replace('SITEID', "'"+site_id+"'")
-					.replace("SITEIMAGESRC", site.image)
-					.replace("SITENAME", site.name)
-					.replace("SITENAME", site.name);
-					
-				lil.append(el);
-                lil.append("<li/>")
+								
+				el = t.replace('OPTIONID', site_id)					
+					.replace("VALUE", site_id)
+					.replace("OPTIONTEXT", site.name)
+										
+				lil.append(el);                
 
              }
 			
-			 if (siteStored=="" || siteStored==null ){
-            
-            	window.location.href="#map-mobile-home-page";
-            
-			}else {
+            window.screen.orientation.lock("portrait");
+			
+			 if (siteStored !="" && siteStored !=null && stored_campus_id !=null 
+				 &&siteStored !="null" && stored_campus_id !="null" ){
 				//setToSiteCampus();
                 onSiteClick(siteStored);
 				window.location.href="#nav-page";
+                return;				             
+			}else {
+				
+				stored_org_index=0;
+            	//window.location.href="#map-mobile-home-page";
+				 goToHomePage();
+                return;
+
 			}
         });
         
        
         
     },
-	
-	/* saves selected campus id within site and navigates to  the sisfm of the campus
-	 * id is campus id, 
-	 * url is sisfm url
-	*/
-    openCampusSisfm: function(url, id){
-		var campuses = $("#campuses");
-		var site_id = window.localStorage.getItem("site_id");
-		
-		window.localStorage.setItem("campus_id", id);				
-		
-        cordova.InAppBrowser.open(url, '_system');
-    }
-};
+    //configures onclick parameters of the Select Button to sisfm url of the selected campus
+     goToSisfmSite: function(){
+        var sbt = $("#goto-sisfm-button");
+        var osel= $("#campuses")[0];
+        var selOption=null;
+         if (osel.selectedIndex <0){
+            osel.selectedIndex = window.localStorage.getItem("selected_index");
+            if (osel.selectedIndex ==null || osel.selectedIndex <0 ){
+                alert("Please select one of the options from the menu");
+                return;
+            } 
+         }
 
-function getStoredSite(){
-    var siteId = window.localStorage.getItem("site_id");
-    return siteId;
-};
+        selOption= osel[osel.selectedIndex];
+        window.localStorage.setItem("selected_index", osel.selectedIndex);
+        window.localStorage.setItem("campus_name", selOption.id);
 
-/*gets campuses for the selected site and add them to the list view of the campuses
-*It hides all but the one stored in window local storage
-*/
-function setToSiteCampus(){
-	var campus_id =  window.localStorage.getItem("campus_id");
-	var site_id = window.localStorage.getItem("site_id");
-	
-	var site = sites_map[site_id];
-	var campuses = site.campuses;
-
-	
-	
-	var lil= $("#campuses");
-	var t='<li id="CAMPUSID" hidden=true onclick="app.openCampusSisfm(SISFM-URL,CAMPUS-ID)"><img border="0" alt="CAMPUS Icon" src="CAMPUSIMAGESRC" width="50" height="50"><label>CAMPUSNAME</label></li>';
-    t='<li data-inset="true" id="CAMPUSID" onclick="app.openCampusSisfm(SISFM-URL,CAMPUS-ID)"><a href="#" ><img border="0" alt="CAMPUS Icon" src="CAMPUSIMAGESRC" width="50" height="50">CAMPUSNAME</a></li>';
-	var k, el, campus, image, campus_name, sisfm_url;
-	
-	lil.empty();
-	
-	for(k=0; k<campuses.length; k++){
-		campus= campuses[k];
-		image = campus.image;
-		campus_name = campus.campus_name;
-		sisfm_url = campus['sisfm-url'];
-				
-		el = t.replace('CAMPUSID', campus_name)
-			.replace('SISFM-URL', "'"+sisfm_url+"'")
-			.replace('CAMPUS-ID', "'"+campus_name+"'")
-			.replace("CAMPUSIMAGESRC", image)
-			.replace("CAMPUS", campus_name)
-			.replace("CAMPUSNAME", campus_name);
-		if ( campus_name == campus_id){
-			el =el.replace("hidden=true", "hidden=false");
-		}
-		
-		lil.append(el);
+		 stored_campus_id = selOption.id;
+		 
+        siteStored=window.localStorage.getItem("site_id");
+        cordova.InAppBrowser.open(selOption.getAttribute("sisfm_url"), '_system');
+      //  window.location.href="#map-mobile-home-page";
+        window.location.href="#nav-page";
+        //window.localStorage.setItem("org_selector_index", stored_org_index);
     }
 
 	
-}
+	
+};
+
+function onOrgSelected(){
+    var org_selector_index;
+    var org_soption;
+    var site_id=null;
+    org_selector_index = parseInt($("#sites")[0].selectedIndex);//get selected option index
+    stored_org_index = org_selector_index;
+    org_soption = $("#sites")[0].options[org_selector_index];
+    site_id = org_soption.id;
+    onSiteClick(site_id);
+};
 
 /*
-* gets campuses for the selected site and add them to the list view of the campuses
+* gets campuses for the selected site and add them to the menu of the campuses
 */
 
 function onSiteClick(site_id) {
         //alert("Inside method, page =" + ev);
+    
 	var site = sites_map[site_id];
 	var campuses = site.campuses;
+	var cur_site_id =  window.localStorage.getItem("site_id");
+	var cur_sel_id=null;
+    var k, el, campus, image, campus_name, sisfm_url, t, org_soption, org_selector_index;
+    
+    org_selector_index = parseInt($("#sites")[0].selectedIndex);//get selected option index
+    
+    window.localStorage.setItem("org_selector_index", org_selector_index);//store selected index 
+    
+    org_soption = $("#sites")[0].options[org_selector_index];
+    
+    var lil= $("#campuses");
+    var selected_index=null;
+	var soption=null;
+    var osel=null;
+    var campus_menu=null;
+	
 	window.localStorage.setItem("site_id", site_id);
-	
-	
-	var lil= $("#campuses");
-	var t='<li data-inset="true" id="CAMPUSID" onclick="app.openCampusSisfm(SISFM-URL,CAMPUS-ID)" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c"><a href="#" class="ui-btn ui-btn-icon-right ui-icon-carat-r"><img border="0" alt="CAMPUS Icon" src="CAMPUSIMAGESRC"  class="ui-li-thumb">CAMPUSNAME</a></li>';
-	var k, el, campus, image, campus_name, sisfm_url;
-	
+			
+	t='<option id="CAMPUSID" sisfm_url="SISURL" value="VALUE" >OPTIONTEXT</option>';
+		
 	lil.empty();
-	
+   
 	for(k=0; k<campuses.length; k++){
 		campus= campuses[k];
 		image = campus.image;
 		campus_name = campus.campus_name;
 		sisfm_url = campus['sisfm-url'];
-				
-		el = t.replace('CAMPUSID', campus_name)
-			.replace('SISFM-URL', "'"+sisfm_url+"'")
-			.replace('CAMPUS-ID', "'"+campus_name+"'")
-			.replace("CAMPUSIMAGESRC", image)
-			.replace("CAMPUS", campus_name)
-			.replace("CAMPUSNAME", campus_name);
+		////.replace('SISFM-URL', "'"+sisfm_url+"'")	.replace('CAMPUS-ID', "'"+campus_name+"'")
+		el = t.replace('CAMPUSID', campus_name)						
+			.replace("VALUE", campus_name)
+			.replace("SISURL", sisfm_url)
+			.replace("OPTIONTEXT", campus_name);
 		
 		lil.append(el);
     }
+    selected_index = 0;
+	if (cur_site_id == site_id){
+		selected_index =  window.localStorage.getItem("selected_index");   
+        if (selected_index ==null){
+            selected_index = 0;
+        }
+	}
+    if (selected_index !=null){
+            osel = lil[0];
+           soption= osel.options[selected_index];
+            campus_menu = lil.selectmenu();
+            campus_menu.ready();
+            //campus_menu.selectmenu('refresh');
+            $("#campuses option[value='"+soption.value+"']").attr('selected', 'selected');
+            
+            lil.selectmenu('refresh');
+                        
+    }
+	$("#campuses-page-header").text(site.org_header_title);
+    $("#campuses-page-footer").text(site.org_footer_title);
+    $("#campus-page-image-place-holder")[0].src=site.image_url;//campuses_page_image_style
+	$("#campus-page-image-place-holder")[0].style=stored_msg.campuses_page_image_style;
+    
 	window.location.href="#nav-page";
 	
 				        
 };
-
 function goToHomePage(){
+    var org_index=stored_org_index;//window.localStorage.getItem("org_selector_index");
+    var lil= $("#sites");
+    var osel=null;
+    var soption, org_menu;
+    if (org_index ==null || org_index <0){
+        org_index=0;
+    }
+    osel=lil[0];
+    soption= osel.options[org_index];
+    //org_menu=lil.selectmenu();
+   // org_menu.ready();
+    $("#sites option[value='"+soption.value+"']").attr('selected', 'selected');
+            
+    lil.selectmenu('refresh');
+            
+    window.localStorage.setItem("site_id", null);
+	window.localStorage.setItem("campus_name", null);
 	window.location.href="#map-mobile-home-page";
 };
 

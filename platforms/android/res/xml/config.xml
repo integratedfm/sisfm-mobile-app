@@ -3,6 +3,9 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="CDVOrientation">
+        <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
+    </feature>
     <name>sisfm-mob-app</name>
     <description>
         A blank PhoneGap app.
@@ -13,4 +16,5 @@
     <content src="index.html" />
     <access origin="*" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="orientation" value="portrait" />
 </widget>

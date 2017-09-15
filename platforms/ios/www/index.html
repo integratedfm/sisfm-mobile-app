@@ -44,37 +44,69 @@
 <body>
       <div data-role="page" id="map-mobile-home-page">
         <div data-role="header">
-            <h1>SISFM MAP MOBILE</h1>
+            <h1 id="org_page_header">SISFM MAP MOBILE</h1>
             <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+                <p class="event listening" hidden="true">Connecting to Device</p>
+                <p class="event received" hidden="true">Device is Ready</p>
             </div>
         </div>
-        <div data-role="main" class="ui-content">
-            <ul data-role="listview" data-inset="true" id="sites">
-				
-            </ul>
-        </div>
+            
+            <div data-role="main" class="ui-content">
+				<div id="org-page-selector-div" style="position: absolute; top: 10%; width:95%">
+                <form>
+                    <label class="ui-btn ui-corner-all" >Organisation</label>
+                    <div class="ui-field-contain" >
+                        
+                        <select name="select-native-org" id="sites" data-iconpos="left" >
+                            
+                        </select>
+                        
+                    </div>
+                    
+                </form>
+					<button class="ui-btn ui-corner-all" id="goto-campuses-page"  onclick="onOrgSelected()">Select</button>
+				</div>
+                <div >
+                    <img border="0" alt="IFM SISFM MAP MOBILE ICON " src=""  id="org-page-image-place-holder" style="position: absolute; top: 50%;  left: 20%; margin: 0 auto">
+                </div>
+
+
+            </div>
         <div data-role="footer" data-position="fixed">
-            <h2>SISFM MAP Mobile</h2>
+            <h2></h2>
         </div>
     </div>
     
-    <div data-role="page" id="nav-page">
+    <div data-role="page" id="nav-page" >
         <div data-role="header" data-position="fixed">
-            <h1>SISFM MAP MOBILE</h1>
+            <h1 id="campuses-page-header">SISFM MAP MOBILE</h1>
+            
         </div>
-        <div data-role="main" class="ui-content">
-            <ul data-role="listview" data-inset="true" id="campuses">				
+        
+            <div data-role="main" class="ui-content">   
+                
+                <form>
+                    <label class="ui-btn ui-corner-all " >Site</label>
+                    <div class="ui-field-contain">
+                        
+                        <select name="select-native-3" id="campuses" data-iconpos="left" >
+                            
+                        </select>
+                        
+                    </div>
+					
+                </form>
+				<button class="ui-btn ui-corner-all" id="goto-sisfm-button"  onclick="app.goToSisfmSite()">Select</button>
+        <div >
+                    <img border="0" alt="ORG SISFM MAP MOBILE ICON " src=""  id="campus-page-image-place-holder" style="position: absolute; top: 50%;  left: 20%; margin: 0 auto">
+                </div>
 				
-			</ul>            
-        </div>
+            </div>
         <div data-role="footer" data-position="fixed">
-            <h2><a href="#map-mobile-home-page" onclick="location.href='index.html#map-mobile-home-page'" >Back To Home Page </a></h2>
+            <h2><a href="#map-mobile-home-page" id="campuses-page-footer" onclick="goToHomePage()" >Back To Home Page </a></h2>
         </div>
     </div>
      
-    <script src="http://10.0.0.115:8080/target/target-script-min.js#anonymous"></script>
     
     
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
