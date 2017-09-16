@@ -1,14 +1,12 @@
-# A Blank PhoneGap App
+# IFM PhoneGap App For Accessing SISfm Pages
 
-## Usage
+This App Has been developed for the sole purpose of IFM Customers who prefer to Access Their SISfm Web Application Via a Mobile Application.
 
-### PhoneGap CLI
+How it works:
 
-    $ phonegap create my-app --template blank
+1- In the first page of this app user selects the Organisation from a menu and Press Select button to go to the Second page of the app;
 
-### Desktop
+2- In the second page of this app user selects the SISfm Site from a menu and Press Select button to open the SISfm web application;
 
-In your browser, open the file:
 
-    /www/index.html
 
