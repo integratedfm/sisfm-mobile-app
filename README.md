@@ -1,4 +1,4 @@
-# IFM PhoneGap App For Accessing SISfm Pages
+# IFM SISfm Map Mobile App For Accessing SISfm Pages
 
 This App Has been developed for the sole purpose of IFM Customers who prefer to Access Their SISfm Web Application Via a Mobile Application.
 
