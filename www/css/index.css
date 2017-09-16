@@ -71,11 +71,12 @@ body {
 
 h1 {
     font-size:24px;
-    font-weight:normal;
+    font-weight:bold;
     margin:0px;
     overflow:visible;
     padding:0px;
     text-align:center;
+	
 }
 
 .event {
@@ -112,4 +113,31 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+.ui-title {
+    margin: 0.6em 10% 0.8em !important;
+	
+}
+.image-custom {
+	position: absolute; 
+	top: 50%;  
+	left: 50%; 
+	margin: 0 auto
+}
+
+.image-custom-org {
+	position: absolute; 
+	top: 50%;  
+	left: 50%; 
+	margin: 0 auto
+}
+
+.page-sisfm-org {
+	background-color:burlywood;
+}
+
+.page-sisfm-campuses{
+	background-color:h;
+	
 }

@@ -21,6 +21,9 @@ var siteStored=null;
 var stored_org_index=0;
 var stored_campus_id=null;
 var stored_msg;
+
+
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -54,7 +57,8 @@ var app = {
         console.log('Received Event: ' + id);
         siteStored = window.localStorage.getItem("site_id");
 		stored_campus_id = window.localStorage.getItem("campus_name");
-        
+		
+		
         jQuery.getJSON("http://afm.integratedfm.com.au/sisfm-mobile/sisfm-urls.json", function(msg){
             var res = msg;
             stored_msg=msg;
@@ -72,6 +76,8 @@ var app = {
             $("#org_page_header").text(org_page_title);
 			
             $("#org-page-image-place-holder")[0].src=msg.org_page_image;
+			
+			
 			//$("#org-page-image-place-holder")[0].style=(msg.org_page_image_style);
 			//$("#org-page-selector-div")[0].style=msg.org_page_sel_div_style;
             lil.empty();
@@ -96,10 +102,13 @@ var app = {
 			
             window.screen.orientation.lock("portrait");
 			
+			
 			 if (siteStored !="" && siteStored !=null && stored_campus_id !=null 
 				 &&siteStored !="null" && stored_campus_id !="null" ){
 				//setToSiteCampus();
                 onSiteClick(siteStored);
+				 
+				 
 				window.location.href="#nav-page";
                 return;				             
 			}else {
@@ -110,9 +119,11 @@ var app = {
                 return;
 
 			}
+			
         });
         
-       
+        //alignCampusesPageImage();
+		//alignOrgPageImage();
         
     },
     //configures onclick parameters of the Select Button to sisfm url of the selected campus
@@ -164,6 +175,8 @@ function onSiteClick(site_id) {
         //alert("Inside method, page =" + ev);
     
 	var site = sites_map[site_id];
+	var image_sz= site.image_size;
+	var page_color=site.screen_color;
 	var campuses = site.campuses;
 	var cur_site_id =  window.localStorage.getItem("site_id");
 	var cur_sel_id=null;
@@ -180,6 +193,7 @@ function onSiteClick(site_id) {
 	var soption=null;
     var osel=null;
     var campus_menu=null;
+	var org_image;
 	
 	window.localStorage.setItem("site_id", site_id);
 			
@@ -221,10 +235,11 @@ function onSiteClick(site_id) {
 	$("#campuses-page-header").text(site.org_header_title);
     $("#campuses-page-footer").text(site.org_footer_title);
     $("#campus-page-image-place-holder")[0].src=site.image_url;//campuses_page_image_style
-	$("#campus-page-image-place-holder")[0].style=stored_msg.campuses_page_image_style;
-    
-	window.location.href="#nav-page";
+	//$("#campus-page-image-place-holder")[0].style=stored_msg.campuses_page_image_style;
 	
+	window.location.href="#nav-page";
+	alignCampusesPageImage(image_sz);	
+	$(".page-sisfm-campuses").css("background-color",site.screen_color);
 				        
 };
 function goToHomePage(){
@@ -237,15 +252,47 @@ function goToHomePage(){
     }
     osel=lil[0];
     soption= osel.options[org_index];
-    //org_menu=lil.selectmenu();
-   // org_menu.ready();
     $("#sites option[value='"+soption.value+"']").attr('selected', 'selected');
             
     lil.selectmenu('refresh');
             
     window.localStorage.setItem("site_id", null);
 	window.localStorage.setItem("campus_name", null);
+	//org-page-image-place-holder
+		
 	window.location.href="#map-mobile-home-page";
+	alignOrgPageImage(stored_msg.image_size);
 };
 
+function getRealContentHeight() {
+    var screen = $.mobile.getScreenHeight(),
+    header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
+    footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
+    contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height(),
+    content_height = screen - header - footer - contentCurrent;
+    return content_height;
+};
 
+function alignOrgPageImage(sz){
+	var org_page_image=null;
+	org_page_image=$("#org-page-image-place-holder")[0];
+	if (org_page_image==null){
+		return;
+	}
+	
+	var image_left = $.mobile.window.width() / 2 - sz/2;//org_page_image.width/2;
+	$(".image-custom").css('left', image_left);
+	$(".page-sisfm-org").css("background-color",stored_msg.screen_color);
+	
+};
+
+function alignCampusesPageImage(sz){	
+	var campuses_image=null;
+	campuses_image=$("#campus-page-image-place-holder")[0];
+	if(campuses_image==null){
+		return;
+	}
+	var campuses_image_left = $.mobile.window.width() / 2 - sz/2;//campuses_image.width/2;	
+	$(".image-custom").css('left', campuses_image_left);
+	
+};
