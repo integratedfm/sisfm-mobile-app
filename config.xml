@@ -14,4 +14,6 @@
     <engine name="android" spec="~6.2.3" />
     <preference name="orientation" value="portrait" />
     <plugin name="cordova-plugin-screen-orientation" spec="^2.0.1" />
+	<icon src="www/res/icon/ios/sisfm-icon.png" platform="ios" width="57" height="57" />
+	<icon density="ldpi" src="www/res/icon/android/sisfm-icon.png" />
 </widget>

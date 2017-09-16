@@ -9,5 +9,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <icon height="57" platform="ios" src="www/res/icon/ios/sisfm-icon.png" width="57" />
+    <icon density="ldpi" src="www/res/icon/android/sisfm-icon.png" />
     <preference name="orientation" value="portrait" />
 </widget>
