@@ -8,5 +8,10 @@ How it works:
 
 2- In the second page of this app user selects the SISfm Site from a menu and Press Select button to open the SISfm web application;
 
+Above two steps are necessary for the first time. 
+Later on the app opens with last selected site and user can open the stored site with one click.
 
+3- User can change Site from the second page Select Menu;
+
+4- User can change Oranisation by clicking Select Organisation to go to the First Page.
 
