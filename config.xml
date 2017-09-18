@@ -18,6 +18,11 @@
 		<icon src="www/res/icon/ios/sisfm-icon.png" platform="ios" width="57" height="57" />
 	</platform>
 	<platform name="android">
-		<icon density="mdpi" src="www/res/icon/android/sisfm-icon.png" />
+		<icon density="mdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-xxhdpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
 	</platform>
 </widget>
