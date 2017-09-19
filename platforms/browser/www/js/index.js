@@ -59,7 +59,7 @@ var app = {
 		stored_campus_id = window.localStorage.getItem("campus_name");
 		
 		
-        jQuery.getJSON("http://afm.integratedfm.com.au/sisfm-mobile/sisfm-urls.json", function(msg){
+        $.getJSON("http://afm.integratedfm.com.au/sisfm-mobile/sisfm-urls.json", function(msg){
             var res = msg;
             stored_msg=msg;
 			var site, site_id, t, k;
@@ -120,7 +120,8 @@ var app = {
 
 			}
 			
-        });
+        }).fail( function() {alert("Connection to server failed. Please Try again Later.");})
+		.isRejected(function() {alert("Connection to server is Rejected. Please Try again Later.");});
         
         //alignCampusesPageImage();
 		//alignOrgPageImage();
