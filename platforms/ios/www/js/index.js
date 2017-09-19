@@ -66,10 +66,7 @@ var app = {
 			var lil= $("#sites");
             var org_page_title = msg.org_page_header;
             var org_page_image = msg.org_page_image;
-			
-			
-            
-            
+			            
             var el;
 			var sites=msg.sites;
 			
@@ -77,11 +74,7 @@ var app = {
 			
             $("#org-page-image-place-holder")[0].src=msg.org_page_image;
 			
-			
-			//$("#org-page-image-place-holder")[0].style=(msg.org_page_image_style);
-			//$("#org-page-selector-div")[0].style=msg.org_page_sel_div_style;
-            lil.empty();
-			//console.log('Got UL: ');
+            lil.empty();///empty menu list
 			
             t='<option id="OPTIONID" value="VALUE" >OPTIONTEXT</option>';
 			console.log('Got sites: ');
@@ -105,27 +98,20 @@ var app = {
 			
 			 if (siteStored !="" && siteStored !=null && stored_campus_id !=null 
 				 &&siteStored !="null" && stored_campus_id !="null" ){
-				//setToSiteCampus();
-                onSiteClick(siteStored);
-				 
-				 
+				onSiteClick(siteStored);//goto stored site of the stored org
 				window.location.href="#nav-page";
                 return;				             
 			}else {
 				
 				stored_org_index=0;
-            	//window.location.href="#map-mobile-home-page";
-				 goToHomePage();
+				goToHomePage();
                 return;
 
 			}
 			
         }).fail( function() {alert("Connection to server failed. Please Try again Later.");})
 		.isRejected(function() {alert("Connection to server is Rejected. Please Try again Later.");});
-        
-        //alignCampusesPageImage();
-		//alignOrgPageImage();
-        
+                
     },
     //configures onclick parameters of the Select Button to sisfm url of the selected campus
      goToSisfmSite: function(){
@@ -148,13 +134,10 @@ var app = {
 		 
         siteStored=window.localStorage.getItem("site_id");
         cordova.InAppBrowser.open(selOption.getAttribute("sisfm_url"), '_system');
-      //  window.location.href="#map-mobile-home-page";
         window.location.href="#nav-page";
-        //window.localStorage.setItem("org_selector_index", stored_org_index);
+      
     }
 
-	
-	
 };
 
 function onOrgSelected(){
@@ -169,7 +152,7 @@ function onOrgSelected(){
 };
 
 /*
-* gets campuses for the selected site and add them to the menu of the campuses
+* gets Sites for the selected Org and add them to the menu of the campuses
 */
 
 function onSiteClick(site_id) {
@@ -207,7 +190,7 @@ function onSiteClick(site_id) {
 		image = campus.image;
 		campus_name = campus.campus_name;
 		sisfm_url = campus['sisfm-url'];
-		////.replace('SISFM-URL', "'"+sisfm_url+"'")	.replace('CAMPUS-ID', "'"+campus_name+"'")
+		
 		el = t.replace('CAMPUSID', campus_name)						
 			.replace("VALUE", campus_name)
 			.replace("SISURL", sisfm_url)
