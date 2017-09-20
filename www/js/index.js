@@ -109,8 +109,8 @@ var app = {
 
 			}
 			
-        }).fail( function() {alert("Connection to server failed. Please Try again Later.");})
-		.isRejected(function() {alert("Connection to server is Rejected. Please Try again Later.");});
+        }).fail( function() {alert("Connection to server failed. Please try again later.");})
+		.isRejected(function() {alert("Connection to server is rejected. Please try again later.");});
                 
     },
     //configures onclick parameters of the Select Button to sisfm url of the selected campus
